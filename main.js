@@ -267,9 +267,9 @@ async function handleRequest(request, env, ctx) {
 class Handler {
     constructor(db, options) {
         this.version = 'v2.3.3'
-        this.build = '2026-04-23 16:27:55'
+        this.build = '2026-07-14 11:28:28'
         this.arch = 'js'
-        this.commit = 'd4c12b850e98678882041ff0695b2ca476ff46de'
+        this.commit = '3d79c533282d2a1f054523255662835c26957898'
         this.allowNewDevice = options.allowNewDevice
         this.allowQueryNums = options.allowQueryNums
 
@@ -431,13 +431,14 @@ class Handler {
             const url = parameters.url || undefined
             const image = parameters.image || undefined
             const copy = parameters.copy || undefined
-            const badge = parameters.badge || undefined
+            const badge = parameters.badge?.toString()
             const autoCopy = parameters.autocopy || undefined
             const action = parameters.action || undefined
             const iv = parameters.iv || undefined
             const id = parameters.id || undefined
             const _delete = parameters.delete || undefined
             const markdown = parameters.markdown || undefined
+            const ttl = parameters.ttl || undefined
 
             // https://developer.apple.com/documentation/usernotifications/generating-a-remote-notification
             const aps = {
@@ -493,6 +494,7 @@ class Handler {
                 'id': id,
                 'delete': _delete,
                 'markdown': markdown,
+                'ttl': ttl,
             }
 
             const headers = {
@@ -690,6 +692,7 @@ class Handler {
                         'image':        { 'type': 'string', 'description': 'Notification image URL' },
                         'group':        { 'type': 'string', 'description': 'Notification group' },
                         'isArchive':    { 'type': 'string', 'description': "Set to '1' to archive, other value to skip" },
+                        'ttl':          { 'type': 'number', 'description': 'Time to live in seconds for archived messages; expired items are automatically deleted' },
                         'url':          { 'type': 'string', 'description': 'Click action URL' },
                         'copy':         { 'type': 'string', 'description': 'Text to copy on copy action' },
                         'device_key': sessionDeviceKey ? undefined : { 'type': 'string', 'description': 'Device key' },

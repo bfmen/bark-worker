@@ -249,9 +249,9 @@ async function handleRequest(request, env, ctx) {
 class Handler {
     constructor(db, options) {
         this.version = 'v2.2.6'
-        this.build = '2026-04-17 10:45:09'
+        this.build = '2026-07-14 11:28:28'
         this.arch = 'js'
-        this.commit = '485742943916b859a49085fd72cd4ffb419f6266'
+        this.commit = '3d79c533282d2a1f054523255662835c26957898'
         this.allowNewDevice = options.allowNewDevice
         this.allowQueryNums = options.allowQueryNums
         
@@ -413,13 +413,14 @@ class Handler {
             const url = parameters.url || undefined
             const image = parameters.image || undefined
             const copy = parameters.copy || undefined
-            const badge = parameters.badge || undefined
+            const badge = parameters.badge?.toString()
             const autoCopy = parameters.autocopy || undefined
             const action = parameters.action || undefined
             const iv = parameters.iv || undefined
             const id = parameters.id || undefined
             const _delete = parameters.delete || undefined
             const markdown = parameters.markdown || undefined
+            const ttl = parameters.ttl || undefined
             
             // https://developer.apple.com/documentation/usernotifications/generating-a-remote-notification
             const aps = {
@@ -475,6 +476,7 @@ class Handler {
                 'id': id,
                 'delete': _delete,
                 'markdown': markdown,
+                'ttl': ttl,
             }
 
             const headers = {
